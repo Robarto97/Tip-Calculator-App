@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap");
+$strongCyan: hsl(172, 67%, 45%);
+// Neutral colors
+$veryDarkCyan: hsl(183, 100%, 15%);
+$darkGrayishCyan: hsl(186, 14%, 43%);
+$grayishCyan: hsl(184, 14%, 56%);
+$lightGrayishCyan: hsl(185, 41%, 84%);
+$veryLightGrayishCyan: hsl(189, 41%, 97%);
+$white: hsl(0, 0%, 100%);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+}
+body {
+  background-color: $lightGrayishCyan;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+main {
+  width: 800px;
+  .logo {
+    width: 8%;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  form {
+    background-color: $veryLightGrayishCyan;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem;
+    column-gap: 2rem;
+    border-radius: 20px;
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+      .input {
+        display: flex;
+        flex-direction: column;
+        label {
+          color: $darkGrayishCyan;
+          margin-bottom: 0.25rem;
+        }
+        input[type="text"] {
+          text-align: right;
+          border: 2px solid transparent;
+          border-radius: 5px;
+          padding: 0.25rem 1rem;
+          padding-left: 2.25rem;
+          background-color: $lightGrayishCyan;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+        input[type="text"]:focus {
+          border: 2px solid $strongCyan;
+          background-color: $veryLightGrayishCyan;
+          outline: none;
+        }
+        #bill {
+          background-image: url(images/icon-dollar.svg);
+          background-repeat: no-repeat;
+          background-position: left 5% center;
+        }
+        #people {
+          background-image: url(images/icon-person.svg);
+          background-repeat: no-repeat;
+          background-position: left 5% center;
+        }
+        #tip {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 0.5rem;
+          button {
+            background-color: $veryDarkCyan;
+            color: $white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+          }
+          button.clicked{
+            background-color: $strongCyan;
+          }
+          button:hover{
+            background-color: $lightGrayishCyan;
+            color: $veryDarkCyan;
+          }
+          #custom {
+            background-color: $lightGrayishCyan;
+            color: $darkGrayishCyan;
+            width: 100%;
+            padding: 0.25rem 1rem;
+            font-size: 1.2rem;
+          }
+          #custom:focus {
+            background-color: $veryLightGrayishCyan;
+          }
+        }
+      }
+    }
+    .tipAmount {
+      background-color: $veryDarkCyan;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .rows {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        .row {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          .tipLabel {
+            display: flex;
+            flex-direction: column;
+            span:first-of-type {
+              color: $white;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+            }
+            span:last-of-type {
+              color: $darkGrayishCyan;
+              font-size: 0.8rem;
+            }
+          }
+          .amount {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.25rem;
+            span {
+              color: $strongCyan;
+              font-size: 2.5rem;
+            }
+          }
+        }
+      }
+      #reset {
+        text-transform: uppercase;
+        padding: 0.25rem;
+        border-radius: 5px;
+        border: none;
+        font-size: 1.2rem;
+        cursor: not-allowed;
+        margin-top: 5rem;
+      }
+      #reset:enabled {
+        background-color: $strongCyan;
+        color: $veryDarkCyan;
+        cursor: pointer;
+      }
+      #reset:enabled:hover {
+        background-color: $lightGrayishCyan;
+      }
+    }
+  }
+}
