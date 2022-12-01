@@ -54,7 +54,7 @@ function App() {
     } else {
       document.querySelector("#reset").disabled = true;
     }
-  }, [bill && people && tip]);
+  }, [bill, tip, people]);
 
   return (
     <div className="App">
