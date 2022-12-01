@@ -59,9 +59,9 @@ function App() {
   return (
     <div className="App">
       <main>
-        <div className="logo">
+        <h1 className="logo">
           <img src={logo} alt="" />
-        </div>
+        </h1>
         <form>
           <div className="info">
             <div className="input">
@@ -76,7 +76,7 @@ function App() {
               />
             </div>
             <div className="input">
-              <label htmlFor="tip">Select Tip %</label>
+              <label>Select Tip %</label>
               <div className="buttons" id="tip">
                 <button onClick={handleTipClick} type="button">
                   5%
