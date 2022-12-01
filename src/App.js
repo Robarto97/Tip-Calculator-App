@@ -1,8 +1,61 @@
 import "./styles.scss";
 import logo from "./images/logo.svg";
-import dollar from "./images/icon-dollar.svg";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [bill, setBill] = useState("");
+  const [people, setPeople] = useState("");
+  const [tip, setTip] = useState("");
+  const [tipAmount, setTipAmount] = useState("0.00");
+  const [totalAmount, setTotalAmount] = useState("0.00");
+
+  const buttons = document.querySelectorAll(".buttons>button");
+  const resetButton = document.querySelector("#reset");
+
+  const handleTipClick = (e) => {
+    const currTarget = e.target;
+    buttons.forEach((button) => {
+      button.classList.remove("clicked");
+    });
+    currTarget.classList.add("clicked");
+    setTip(currTarget.innerText.replace("%", ""));
+  };
+  const handleReset = () => {
+    document.querySelector("#bill").value = "";
+    setBill("");
+    document.querySelector("#people").value = "";
+    setPeople("");
+    buttons.forEach((button) => {
+      button.classList.remove("clicked");
+    });
+    setTip("");
+    setTipAmount("0.00");
+    setTotalAmount("0.00");
+  };
+
+  const handleCheck = (e) => {
+    if (e.target.value === "") {
+      document.querySelector("#people").classList.add("error");
+      document.querySelector("#errorMessage").style.display = "block";
+    }
+  };
+
+  useEffect(() => {
+    if (bill !== "" && people !== "" && tip !== "") {
+      resetButton.disabled = false;
+      const tipAmountRes =
+        Math.floor((((bill / people) * tip) / 100) * 100) / 100;
+      setTipAmount(tipAmountRes);
+      const totalTipRes = (
+        bill / people +
+        ((bill / people) * tip) / 100
+      ).toFixed(2);
+      setTotalAmount(totalTipRes);
+    } else {
+      document.querySelector("#reset").disabled = true;
+    }
+  }, [bill && people && tip]);
+
   return (
     <div className="App">
       <main>
@@ -13,22 +66,60 @@ function App() {
           <div className="info">
             <div className="input">
               <label htmlFor="bill">Bill</label>
-              <input type="text" id="bill" name="bill" placeholder="0" />
+              <input
+                onChange={(e) => setBill(e.target.value)}
+                type="text"
+                id="bill"
+                name="bill"
+                placeholder="0"
+                value={bill}
+              />
             </div>
             <div className="input">
               <label htmlFor="tip">Select Tip %</label>
               <div className="buttons" id="tip">
-                <button type="button">5%</button>
-                <button type="button">10%</button>
-                <button type="button">15%</button>
-                <button type="button">25%</button>
-                <button type="button">50%</button>
-                <input type="text" id="custom" placeholder="Custom"></input>
+                <button onClick={handleTipClick} type="button">
+                  5%
+                </button>
+                <button onClick={handleTipClick} type="button">
+                  10%
+                </button>
+                <button onClick={handleTipClick} type="button">
+                  15%
+                </button>
+                <button onClick={handleTipClick} type="button">
+                  25%
+                </button>
+                <button onClick={handleTipClick} type="button">
+                  50%
+                </button>
+                <input
+                  onChange={(e) => {
+                    setTip(e.target.value);
+                  }}
+                  type="text"
+                  id="custom"
+                  placeholder="Custom"
+                ></input>
               </div>
             </div>
             <div className="input">
+              <span id="errorMessage">Can't be zero</span>
               <label htmlFor="people">Number of People</label>
-              <input type="text" name="people" id="people" placeholder="0" />
+              <input
+                onBlur={handleCheck}
+                onChange={(e) => {
+                  document.querySelector("#errorMessage").style.display =
+                    "none";
+                  document.querySelector("#people").classList.remove("error");
+                  setPeople(e.target.value);
+                }}
+                type="text"
+                name="people"
+                id="people"
+                placeholder="0"
+                value={people}
+              />
             </div>
           </div>
           <div className="tipAmount">
@@ -39,7 +130,7 @@ function App() {
                   <span>/ person</span>
                 </div>
                 <div className="amount">
-                  <span>$0.00</span>
+                  <span>${tipAmount}</span>
                 </div>
               </div>
               <div className="row">
@@ -48,11 +139,11 @@ function App() {
                   <span>/ person</span>
                 </div>
                 <div className="amount">
-                  <span>$0.00</span>
+                  <span>${totalAmount}</span>
                 </div>
               </div>
             </div>
-            <button type="reset" id="reset" disabled>
+            <button onClick={handleReset} type="reset" id="reset">
               Reset
             </button>
           </div>
